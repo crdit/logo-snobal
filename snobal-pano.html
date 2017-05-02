@@ -43,10 +43,6 @@
 			onPointerDownLon = 0,
 			onPointerDownLat = 0;
 
-			init();
-			animate();
-
-
 			function init() {
 				var container, mesh;
 				container = document.getElementById( 'container' );
@@ -63,13 +59,13 @@
 				video.loop = true;
 				video.muted = true;
 				video.src = "pano.webm";
-				
+				video.play();
 				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-				if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+				/*if(window.innerWidth <= 800 && window.innerHeight <= 600) {
 			     return;
 			  	} else {
 				 video.play();
-			   	}
+			   	}*/
 
 				var texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;
@@ -87,11 +83,13 @@
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				document.addEventListener('touchstart', onDocumentTouchStart, false);
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 
-			function detectmob() {
-
+			function onDocumentTouchStart() {
+				init();
+				animate();
 			}
 
 
