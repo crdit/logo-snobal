@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Snobal.io</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet">
+        <style>         
+
+
+        body {
+                background-color: #f7f7f7;
+                color: #505050;
+                margin: 0px;
+                overflow: hidden;
+            }
+
+            h1 {
+                font-family: 'Open Sans', sans-serif;
+                font-weight: bold;
+                font-size: 76px;
+                color: #75889e;
+                line-height: 62px;
+                letter-spacing: 1px;
+            }
+
+            h2 {
+                font-family: 'Droid Serif', serif;
+                font-weight: normal;
+                font-size: 27px;
+                line-height: 37px;
+                letter-spacing: 2px;
+            }
+
+            #container {
+                height: 100%;
+                width: 100%;
+                align-content: center;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            #center-quote {
+                width: 100%;
+                text-align: left;
+                display:block;
+                padding-top: 14%;
+                padding-left: 13%;
+            }
+
+            .underline {
+                border-bottom: 4px solid #d6d6d6;
+                padding-bottom: 10px;
+            }
+
+            /* Smartphones (portrait and landscape) ----------- */
+            @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+                h1 {
+                    font-family: 'Open Sans', sans-serif;
+                    font-weight: bold;
+                    font-size: 44px;
+                    color: #75889e;
+                    line-height: 46px;
+                    letter-spacing: 1px;
+                }
+
+                h2 {
+                    font-family: 'Droid Serif', serif;
+                    font-weight: normal;
+                    font-size: 17px;
+                    line-height: 27px;
+                    letter-spacing: 2px;
+                }
+
+                #container {
+                    width: 320px;
+                    height: 100%; 
+                    align-content: center;
+                    position: absolute;
+                    pointer-events: none;
+                }
+
+                #heading-left{
+                    float:left;
+                    text-align:left;
+                    vertical-align: top;
+                    height:72px;
+                    padding-top: 10px;
+                    padding-left: 30px;
+                    pointer-events: visible;
+                }
+
+                #heading-right{
+                    float:left;
+                    text-align:right;
+                    vertical-align: top;
+                    height:72px;
+                    padding-top: 50px;
+                    padding-left: 30px;
+                    pointer-events: visible;
+                }
+
+                #center-quote {
+                    width: 100%;
+                    text-align: left;
+                    z-index: 100;
+                    display:block;
+                    padding-top: 220px;
+                    padding-left: 30px;
+
+                }
+
+                .underline {
+                    border-bottom: 6px solid #d6d6d6;
+                    padding-bottom: 52px;
+                }
+            }
+
+            /* iPads (portrait and landscape) ----------- */
+            @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+                h1 {
+                    font-family: 'Open Sans', sans-serif;
+                    font-weight: bold;
+                    font-size: 97px;
+                    color: #75889e;
+                    line-height: 97px;
+                    letter-spacing: 1px;
+                }
+
+                h2 {
+                    font-family: 'Droid Serif', serif;
+                    font-weight: normal;
+                    font-size: 27px;
+                    line-height: 42px;
+                    letter-spacing: 2px;
+                }
+
+                #container {
+                    width: 100%;
+                    height: 100%; 
+                    align-content: center;
+                    position: absolute;
+                    pointer-events: none;
+                }
+
+                #center-quote {
+                    width: 100%;
+                    text-align: left;
+                    z-index: 100;
+                    display:block;
+                    padding-top: 260px;
+                    padding-left: 7%;
+
+                }
+
+                .underline {
+                    border-bottom: 11px solid #d6d6d6;
+                    padding-bottom: 106px;
+                }
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+    <div id="container">
+        <div id ="overlay">
+            <div id="center-quote">
+                    <h1><a class = "underline"> Make</a> Sales Quicker</h1>
+                    <h2>Collaborative VR Tools to communicate, <br>engage and sell ideas faster</h2></span>
+            </div>
+        </div>
+    </div>
+
+        <script src="Build/three.js"></script>
+        <script src="JS/OrbitControls.js"></script>
+        <script src="JS/FBXLoader2.js"></script>
+        <script src="JS/Detector.js"></script>
+
+        <script>
+
+            if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+            var container, stats, controls;
+            var camera, scene, renderer, light;
+
+            var clock = new THREE.Clock();
+
+            var mixers = [];
+
+            init();
+
+            function init() {
+
+                container = document.createElement( 'div' );
+                document.body.appendChild( container );
+
+                camera = new THREE.PerspectiveCamera( 36, window.innerWidth / window.innerHeight, 1, 2000 );
+
+                scene = new THREE.Scene();
+
+                // model
+                var manager = new THREE.LoadingManager();
+                manager.onProgress = function( item, loaded, total ) {
+                    console.log( item, loaded, total );
+                };
+
+                var onProgress = function( xhr ) {
+                    if ( xhr.lengthComputable ) {
+                        var percentComplete = xhr.loaded / xhr.total * 100;
+                        console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+                    }
+                };
+
+                var onError = function( xhr ) {
+                    console.error( xhr );
+                };
+
+                var loader = new THREE.FBXLoader( manager );
+                loader.load( 'Models/Orbit_Snobal.fbx', function( object ) {
+                   object.mixer = new THREE.AnimationMixer( object );
+                    mixers.push( object.mixer );
+                    var action = object.mixer.clipAction( object.animations[ 0 ] );
+                    action.play();
+                    scene.add( object );
+                    object.scale.x = object.scale.y = object.scale.z = 0.028;
+                    object.position.y = 0.7;
+
+                }, onProgress, onError );
+
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                renderer.setClearColor( 0xf7f7f7 );               
+                container.appendChild( renderer.domElement );
+
+                // controls, camera
+                controls = new THREE.OrbitControls( camera, renderer.domElement );
+                //controls.target.set( 0, 12, 0 );
+                camera.position.set( 2, 16, 28 );
+                controls.autoRotate = true;
+                controls.enableZoom = false;
+                controls.enablePan = false;
+
+                window.addEventListener( 'resize', onWindowResize, false );
+
+                light = new THREE.HemisphereLight(0xffffff, 0x444444, 2.05);
+                light.position.set(0, 1, 0);
+                scene.add(light);
+
+                light = new THREE.DirectionalLight(0xffffff, 2.1);
+                light.position.set(0, 1, 0);
+                scene.add(light);
+
+                animate();
+
+            }
+
+            function onWindowResize() {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+            }
+
+            //
+
+            function animate() {
+
+                requestAnimationFrame( animate );
+                controls.update();
+                render();
+
+            }
+
+            function render() {
+
+                renderer.render( scene, camera );
+
+            }
+
+        </script>
+
+    </body>
+</html>
