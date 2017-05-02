@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>snobal.io - video</title>
+		<title>three.js webgl - equirectangular video panorama</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -30,12 +30,16 @@
 			  opacity: 1.0;
 			  pointer-events: none;
 			}
+			#container{
+				width: 100%;
+				height: 100%;
+			}
 
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<div id="eq-icon"><h1>360</h1><!--img src="/images/360_icon.png" width="100%" height="100%"--></div>
+			<div id="eq-icon" onclick="playvideo()"><h1>Play</h1><!--img src="/images/360_icon.png" width="100%" height="100%"--></div>
 		</div>
 
 		<script>
@@ -94,12 +98,17 @@
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 
+			function playvideo(){
+				video.play();
+			}
+
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
 			
+
 			function hideIcon(){
         		document.getElementById('eq-icon').style.opacity= '0.25';
    			}
