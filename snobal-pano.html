@@ -44,7 +44,8 @@
 
 		<script>
 			var camera, scene, renderer;
-
+			var video = document.createElement( 'video' );
+			
 			var texture_placeholder,
 			isUserInteracting = false,
 			onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -70,7 +71,6 @@
 				var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
 				geometry.scale( - 1, 1, 1 );
 
-				var video = document.createElement( 'video' );
 				video.width = 640;
 				video.height = 360;
 				video.loop = true;
