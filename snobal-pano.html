@@ -33,7 +33,6 @@
 
 		<script>
 			var camera, scene, renderer;
-
 			var texture_placeholder,
 			isUserInteracting = false,
 			onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -45,6 +44,9 @@
 			onPointerDownPointerY = 0,
 			onPointerDownLon = 0,
 			onPointerDownLat = 0;
+
+			init();
+			animate();
 
 
 			function init() {
@@ -63,8 +65,14 @@
 				video.loop = true;
 				video.muted = true;
 				video.src = "pano.webm";
+				
 				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-				video.play();
+				if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+			     return;
+			  	} else {
+				 video.play();
+			   	}
+
 				var texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
@@ -84,11 +92,10 @@
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 
-			function playvideo(){
-							init();
-			animate();
+			function detectmob() {
 
 			}
+
 
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
