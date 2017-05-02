@@ -66,10 +66,11 @@
 
 				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
 				geometry.scale( - 1, 1, 1 );
-
-				var material = new THREE.MeshBasicMaterial( {
-					map: new THREE.TextureLoader().load( 'Textures/2294472375_24a3b8ef46_o.jpg' )
-				} );
+				
+				THREE.ImageUtils.crossOrigin = '';
+				var mapOverlay = THREE.ImageUtils.loadTexture('Textures/2294472375_24a3b8ef46_o.jpg');
+				
+				var material = mapOverlay;
 				mesh = new THREE.Mesh( geometry, material );
 
 				scene.add( mesh );
