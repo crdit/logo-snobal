@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 		<script src="Build/three.js"></script>
+        <script src="js/controls/OrbitControls.js"></script>
 		<style>
 			body {
 				background-color: #000000;
@@ -47,12 +48,13 @@
 			animate();
 
 			function utilCheck(){
+				
 				if(window.innerWidth <= 800 && window.innerHeight <= 600) {
-				    initMobile();
+				    initWeb();
 			  	} 
 
 			  	else {
-			  		initWeb();
+			  		initMobile();
 			   	}
 			}
 
@@ -82,10 +84,15 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
-				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-				window.addEventListener( 'resize', onWindowResize, false );
+                // controls, camera
+                controls = new THREE.OrbitControls( camera, renderer.domElement );
+                //controls.target.set( 0, 12, 0 );
+                camera.position.set( 1, 0, 0 );
+                //controls.autoRotate = true;
+                controls.enableZoom = true;
+                controls.enablePan = false;
+
+                window.addEventListener( 'resize', onWindowResize, false );
 			}
 
 			function initWeb() {
@@ -120,63 +127,32 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
-				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-				window.addEventListener( 'resize', onWindowResize, false );
+                // controls, camera
+                controls = new THREE.OrbitControls( camera, renderer.domElement );
+                //controls.target.set( 0, 12, 0 );
+                camera.position.set( 2, 16, 28 );
+                //controls.autoRotate = true;
+                controls.enableZoom = true;
+                controls.enablePan = false;
+
+                window.addEventListener( 'resize', onWindowResize, false );
 			}
 
 			function onWindowResize() {
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-			}
-			
-			function hideIcon(){
-        		document.getElementById('eq-icon').style.opacity= '0.25';
-   			}
-   			
-   			function showIcon(){
-        		document.getElementById('eq-icon').style.opacity= '1';
-   			}
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
 
-			function onDocumentMouseDown( event ) {
-				event.preventDefault();
-				isUserInteracting = true;
-
-				onPointerDownPointerX = event.clientX;
-				onPointerDownPointerY = event.clientY;
-				onPointerDownLon = lon;
-				onPointerDownLat = lat;
-				hideIcon();
-			}
-
-			function onDocumentMouseMove( event ) {
-				if ( isUserInteracting === true ) {
-					lon = ( onPointerDownPointerX - event.clientX ) * 0.1 + onPointerDownLon;
-					lat = ( event.clientY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
-				}
-			}
-
-			function onDocumentMouseUp( event ) {
-				isUserInteracting = false;
-				showIcon();
+                renderer.setSize( window.innerWidth, window.innerHeight );
 			}
 
 			function animate() {
 				requestAnimationFrame( animate );
 				update();
-			}
+                controls.update();
+            }
+
 
 			function update() {
-				lat = Math.max( - 85, Math.min( 85, lat ) );
-				phi = THREE.Math.degToRad( 90 - lat );
-				theta = THREE.Math.degToRad( lon );
-
-				camera.position.x = distance * Math.sin( phi ) * Math.cos( theta );
-				camera.position.y = distance * Math.cos( phi );
-				camera.position.z = distance * Math.sin( phi ) * Math.sin( theta );
-				camera.lookAt( camera.target );
 				renderer.render( scene, camera );
 			}
 		</script>
