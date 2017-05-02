@@ -12,30 +12,23 @@
 				margin: 0px;
 				overflow: hidden;
 			}
-
-			h1{
-				font-family: 'Open Sans', sans-serif;
-                font-weight: bold;
-                font-size: 97px;
-                color: #f7f7f7;
-			text-align: center;
-			}
 			
 			#eq-icon{
 			  position: absolute;
 				text-align:center
 			  z-index: 15;
-			  width: 100%;
+			  width: 160px;
+			  height: 160px;
 			  top: 25%;
+			  margin: 0 auto;
 			  opacity: 1.0;
-			  pointer-events: none;
 			}
 
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<button onclick="playvideo()"><h1>360</h1></button><!--img src="/images/360_icon.png" width="100%" height="100%"--></div>
+			<button id="eq-icon" onclick="playvideo()">360</button><!--img src="/images/360_icon.png" width="100%" height="100%"--></div>
 		</div>
 
 		<script>
@@ -53,8 +46,6 @@
 			onPointerDownLon = 0,
 			onPointerDownLat = 0;
 
-			init();
-			animate();
 
 			function init() {
 				var container, mesh;
@@ -73,7 +64,7 @@
 				video.muted = true;
 				video.src = "pano.webm";
 				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-
+				video.play();
 				var texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
@@ -94,7 +85,9 @@
 			}
 
 			function playvideo(){
-				video.play();
+							init();
+			animate();
+
 			}
 
 			function onWindowResize() {
