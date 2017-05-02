@@ -67,14 +67,13 @@
 				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
 				geometry.scale( - 1, 1, 1 );
 				
-
-				var material = new THREE.MeshBasicMaterial( {
-
-					map: var loader = new THREE.TextureLoader();
+				var loader = new THREE.TextureLoader();
 				loader.setCrossOrigin("anonymous");
 				loader.load('Textures/2294472375_24a3b8ef46_o.jpg',);
 
-				});
+				var material = new THREE.MeshBasicMaterial( {
+
+				map: loader });
 
 
 
