@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - equirectangular video panorama</title>
+		<title>snobal - video panorama</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -77,7 +77,6 @@
 				video.muted = true;
 				video.src = "pano.webm";
 				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-				video.play();
 
 				var texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;
