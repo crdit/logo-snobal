@@ -67,13 +67,11 @@
 				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
 				geometry.scale( - 1, 1, 1 );
 				
-				var texture = new THREE.TextureLoader();
-				texture.minFilter = THREE.LinearFilter;
-				texture.format = THREE.RGBFormat;
-				texture.setCrossOrigin("anonymous");
-				texture.load('Textures/2294472375_24a3b8ef46_o.jpg');
+				var bigtexture = new THREE.TextureLoader();
+				bigtexture.setCrossOrigin("anonymous");
+				bigtexture.load('Textures/2294472375_24a3b8ef46_o.jpg');
 
-				var material = new THREE.MeshBasicMaterial( { map : texture });
+				var material = new THREE.MeshBasicMaterial( {map: bigtexture} );
 
 				mesh = new THREE.Mesh( geometry, material );
 				
