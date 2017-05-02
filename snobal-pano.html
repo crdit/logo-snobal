@@ -42,8 +42,50 @@
 			onPointerDownPointerY = 0,
 			onPointerDownLon = 0,
 			onPointerDownLat = 0;
+			
+			utilCheck();
+			animate();
+			
 
-			function init() {
+			function utilCheck(){
+				if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+				    initMobile();
+			  	} 
+
+			  	else {
+			  		initWeb();
+			   	}
+			}
+
+			function initMobile() {
+				var container, mesh;
+				container = document.getElementById( 'container' );
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
+				camera.target = new THREE.Vector3( 0, 0, 0 );
+				scene = new THREE.Scene();
+
+				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
+				geometry.scale( - 1, 1, 1 );
+
+				var material = new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load( 'pano_static.jpg' )
+				} );
+				mesh = new THREE.Mesh( geometry, material );
+
+				scene.add( mesh );
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+
+			function initWeb() {
 				var container, mesh;
 				container = document.getElementById( 'container' );
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
@@ -61,11 +103,6 @@
 				video.src = "pano.webm";
 				video.play();
 				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-				/*if(window.innerWidth <= 800 && window.innerHeight <= 600) {
-			     return;
-			  	} else {
-				 video.play();
-			   	}*/
 
 				var texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;
@@ -83,15 +120,8 @@
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-				document.addEventListener('touchstart', onDocumentTouchStart, false);
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
-
-			function onDocumentTouchStart() {
-				init();
-				animate();
-			}
-
 
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
