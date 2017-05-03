@@ -32,30 +32,13 @@
 
 		<script>
 			var camera, scene, renderer;
-			var texture_placeholder,
-			isUserInteracting = false,
-			onMouseDownMouseX = 0, onMouseDownMouseY = 0,
-			lon = 0, onMouseDownLon = 0,
-			lat = 0, onMouseDownLat = 0,
-			phi = 0, theta = 0,
-			distance = 500,
-			onPointerDownPointerX = 0,
-			onPointerDownPointerY = 0,
-			onPointerDownLon = 0,
-			onPointerDownLat = 0;
 			
 			utilCheck();
 			animate();
 
 			function utilCheck(){
-				
-				if(window.innerWidth <= 800 && window.innerHeight <= 600) {
-				    initWeb();
-			  	} 
-
-			  	else {
-			  		initMobile();
-			   	}
+				if(window.innerWidth <= 800 && window.innerHeight <= 600) {initMobile();} 
+				else {initWeb();}
 			}
 
 			function initMobile() {
