@@ -31,7 +31,7 @@
 		<div id="container"></div>
 
 		<script>
-			var camera, scene, renderer;
+			var camera, scene, renderer, controls;
 			
 			utilCheck();
 			animate();
@@ -44,8 +44,8 @@
 			function initMobile() {
 				var container, mesh;
 				container = document.getElementById( 'container' );
-				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
-				camera.target = new THREE.Vector3( 0, 0, 0 );
+				camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
+				controls = new THREE.DeviceOrientationControls( camera );
 				scene = new THREE.Scene();
 
 				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
