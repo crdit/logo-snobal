@@ -4,9 +4,6 @@
 		<title>snobal - video panorama</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        	<script src="Build/three.js"></script>
-        	<script src="JS/OrbitControls.js"></script>
 		<style>
 			body {
 				background-color: #000000;
@@ -24,12 +21,14 @@
 			  margin: 0 auto;
 			  opacity: 1.0;
 			}
-
 		</style>
 	</head>
 	<body>
 		<div id="container"></div>
-
+		
+		<script src="Build/three.js"></script>
+        	<script src="JS/OrbitControls.js"></script>
+        	<script src="JS/DeviceOrientationControls.js"></script>
 		<script>
 			var camera, scene, renderer, controls;
 			
