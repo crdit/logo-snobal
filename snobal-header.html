@@ -199,8 +199,18 @@
 
                 camera = new THREE.PerspectiveCamera( 36, window.innerWidth / window.innerHeight, 1, 2000 );
                 camera.position.set( 2, 16, 28 );
+
                 
                 scene = new THREE.Scene();
+
+                // controls, camera
+                controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = 0.5;
+                controls.rotateSpeed = 0.5;
+                controls.enableZoom = false;
+                controls.enablePan = false;
 
                 // model
                 var manager = new THREE.LoadingManager();
@@ -226,7 +236,16 @@
                     var action = object.mixer.clipAction( object.animations[ 0 ] );
                     action.play();
                     scene.add( object );
-                    object.scale.x = object.scale.y = object.scale.z = 0.028;
+
+                    function mobCheck(){
+                        if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+                            controls.enabled = false;
+                            object.scale.x = object.scale.y = object.scale.z = 0.01;} 
+                        else {
+                            controls.enabled = true; 
+                            object.scale.x = object.scale.y = object.scale.z = 0.028;}
+                    } mobCheck();
+
                     object.position.y = 0.7;
 
                 }, onProgress, onError );
@@ -237,19 +256,6 @@
                 renderer.setSize( window.innerWidth, window.innerHeight );
                 renderer.setClearColor( 0xf7f7f7 );               
                 container.appendChild( renderer.domElement );
-
-                // controls, camera
-                controls = new THREE.OrbitControls( camera, renderer.domElement );
-                mobCheck();
-                function mobCheck(){
-                    if(window.innerWidth <= 800 && window.innerHeight <= 600) {controls.enabled = false;} 
-                    else {controls.enabled = true;}
-			     }
-                controls.autoRotate = true;
-                controls.autoRotateSpeed = 0.5;
-                controls.rotateSpeed = 0.5;
-                controls.enableZoom = false;
-                controls.enablePan = false;
 
                 window.addEventListener( 'resize', onWindowResize, false );
 
