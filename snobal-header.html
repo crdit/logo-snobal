@@ -199,7 +199,6 @@
 
                 camera = new THREE.PerspectiveCamera( 36, window.innerWidth / window.innerHeight, 1, 2000 );
                 camera.position.set( 2, 16, 28 );
-
                 
                 scene = new THREE.Scene();
 
@@ -227,16 +226,7 @@
                     var action = object.mixer.clipAction( object.animations[ 0 ] );
                     action.play();
                     scene.add( object );
-
-                    function mobCheck(){
-                        if(window.innerWidth <= 800 && window.innerHeight <= 600) {
-                            controls.enabled = false;
-                            object.scale.x = object.scale.y = object.scale.z = 0.021;} 
-                        else {
-                            controls.enabled = true; 
-                            object.scale.x = object.scale.y = object.scale.z = 0.028;}
-                    } mobCheck();
-
+                    object.scale.x = object.scale.y = object.scale.z = 0.028;
                     object.position.y = 0.7;
 
                 }, onProgress, onError );
@@ -251,6 +241,11 @@
                 // controls, camera
                 controls = new THREE.OrbitControls( camera, renderer.domElement );
 
+                mobCheck();
+                function mobCheck(){
+                    if(window.innerWidth <= 800 && window.innerHeight <= 600) {controls.enabled = false;} 
+                    else {controls.enabled = true;}
+			     }
                 controls.autoRotate = true;
                 controls.autoRotateSpeed = 0.5;
                 controls.rotateSpeed = 0.5;
@@ -259,7 +254,7 @@
 
                 window.addEventListener( 'resize', onWindowResize, false );
 
-                light = new THREE.HemisphereLight(0xffffff, 0x444444, 2.05);
+                light = new THREE.HemisphereLight(0xffffff, 0x505050, 2.05);
                 light.position.set(0, 1, 0);
                 scene.add(light);
 
