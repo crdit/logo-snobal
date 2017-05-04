@@ -203,15 +203,6 @@
                 
                 scene = new THREE.Scene();
 
-                // controls, camera
-                controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-                controls.autoRotate = true;
-                controls.autoRotateSpeed = 0.5;
-                controls.rotateSpeed = 0.5;
-                controls.enableZoom = false;
-                controls.enablePan = false;
-
                 // model
                 var manager = new THREE.LoadingManager();
                 manager.onProgress = function( item, loaded, total ) {
@@ -256,6 +247,15 @@
                 renderer.setSize( window.innerWidth, window.innerHeight );
                 renderer.setClearColor( 0xf7f7f7 );               
                 container.appendChild( renderer.domElement );
+
+                // controls, camera
+                controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = 0.5;
+                controls.rotateSpeed = 0.5;
+                controls.enableZoom = false;
+                controls.enablePan = false;
 
                 window.addEventListener( 'resize', onWindowResize, false );
 
