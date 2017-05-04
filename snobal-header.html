@@ -198,7 +198,8 @@
                 document.body.appendChild( container );
 
                 camera = new THREE.PerspectiveCamera( 36, window.innerWidth / window.innerHeight, 1, 2000 );
-
+                camera.position.set( 2, 16, 28 );
+                
                 scene = new THREE.Scene();
 
                 // model
@@ -239,9 +240,14 @@
 
                 // controls, camera
                 controls = new THREE.OrbitControls( camera, renderer.domElement );
-                //controls.target.set( 0, 12, 0 );
-                camera.position.set( 2, 16, 28 );
+                mobCheck();
+                function mobCheck(){
+                    if(window.innerWidth <= 800 && window.innerHeight <= 600) {controls.enabled = false;} 
+                    else {controls.enabled = true;}
+			     }
                 controls.autoRotate = true;
+                controls.autoRotateSpeed = 0.5;
+                controls.rotateSpeed = 0.5;
                 controls.enableZoom = false;
                 controls.enablePan = false;
 
