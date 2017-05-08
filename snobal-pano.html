@@ -1,118 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>snobal - video panorama</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				background-color: #000000;
-				margin: 0px;
-				overflow: hidden;
-			}
-			
-			#eq-icon{
-			  position: absolute;
-			  text-align:center
-			  z-index: 15;
-			  width: 160px;
-			  height: 160px;
-			  top: 25%;
-			  margin: 0 auto;
-			  opacity: 1.0;
-			}
-		</style>
-	</head>
-	<body>
+    <head>
+        <title>snobal - video panorama</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            body {
+                background-color: #000000;
+                margin: 0px;
+                overflow: hidden;
+            }
+            
+            #eq-icon{
+                position: absolute;
+                text-align:center;
+                z-index: 90;
+                width: 100%;
+                top: 50%;
+                margin: 0 auto;
+                opacity: 0.6;
+                pointer-events: none;
+                -webkit-animation:spin 4s linear infinite;
+                -moz-animation:spin 4s linear infinite;
+                animation:spin 4s linear infinite;
+            }
 
-		<div id="eq-icon">360</div>
-		<div id="container"></div>
-		
-		<script src="Build/three.js"></script>
-        	<script src="JS/OrbitControls.js"></script>
-        	<script src="JS/DeviceOrientationControls.js"></script>
-		<script>
-			var camera, scene, renderer, controls;
-			
-			utilCheck();
-			animate();
+            @-moz-keyframes spin { 
 
-			function utilCheck(){
-				if(window.innerWidth <= 800 && window.innerHeight <= 600) {initMobile();} 
-				else {initWeb();}
-			}
+                0% { -moz-transform: rotate(0deg);} 
+                25% { -moz-transform: rotate(25deg);} 
+                50% { -moz-transform: rotate(50deg);}
+                75% { -moz-transform: rotate(25deg);} 
+                100% { -moz-transform: rotate(0deg);} 
+            }
+            @-webkit-keyframes spin { 
+                0% { -webkit-transform: rotate(0deg);} 
+                25% { -webkit-transform: rotate(25deg);} 
+                50% { -webkit-transform: rotate(50deg);}
+                75% { -webkit-transform: rotate(25deg);} 
+                100% { -webkit-transform: rotate(0deg);} 
+            }
+            @keyframes spin { 
+                0% { transform:rotate(0deg);} 
+                25% { transform:rotate(25deg);} 
+                50% { transform:rotate(50deg);}
+                75% { transform:rotate(25deg);} 
+                100% { transform:rotate(0deg);} 
+            }
 
-			function initMobile() {
-				var container, mesh;
-				container = document.getElementById( 'container' );
-				camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
-				controls = new THREE.DeviceOrientationControls( camera );
-				scene = new THREE.Scene();
+        </style>
+    </head>
+    <body>
 
-				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
-				geometry.scale( - 1, 1, 1 );
+        <div id="container" onmousedown="hideIcon()">
+            <div id="eq-icon"><img src="Image/hand-icon.png" height="128" width="128"></div>
+        </div>
 
-				var texture = new THREE.TextureLoader();
-				texture.setCrossOrigin("");
+        
+        <script src="Build/three.js"></script>
+            <script src="JS/OrbitControls.js"></script>
+            <script src="JS/DeviceOrientationControls.js"></script>
+        <script>
+            var camera, scene, renderer, controls;
+            
+            utilCheck();
+            animate();
 
-				var material = new THREE.MeshBasicMaterial( {
-					map: texture.load( 'Image/snobal-shopping-pano.jpg' )
-				} );
+            function utilCheck(){
+                if(window.innerWidth <= 800 && window.innerHeight <= 600) {initMobile();} 
+                else {initWeb();}
+            }
 
-				mesh = new THREE.Mesh( geometry, material );
+            function initMobile() {
+                //hide hand
+                hideIcon();
 
-				scene.add( mesh );
+                var container, mesh;
+                container = document.getElementById( 'container' );
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
+                controls = new THREE.DeviceOrientationControls( camera );
+                scene = new THREE.Scene();
 
-				renderer = new THREE.WebGLRenderer();
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				container.appendChild( renderer.domElement );
+                var geometry = new THREE.SphereGeometry( 500, 60, 40 );
+                geometry.scale( - 1, 1, 1 );
 
+                var texture = new THREE.TextureLoader();
+                texture.setCrossOrigin("");
+
+                var material = new THREE.MeshBasicMaterial( {
+                    map: texture.load( 'Image/snobal-shopping-pano.jpg' )
+                } );
+
+                mesh = new THREE.Mesh( geometry, material );
+
+                scene.add( mesh );
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                container.appendChild( renderer.domElement );
 
                 window.addEventListener( 'resize', onWindowResize, false );
-			}
+            }
 
-			function initWeb() {
-				var container, mesh;
-				container = document.getElementById( 'container' );
-				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
-				camera.target = new THREE.Vector3( 0, 0, 0 );
-				scene = new THREE.Scene();
+            function initWeb() {
+                var container, mesh;
+                container = document.getElementById( 'container' );
+                camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
+                camera.target = new THREE.Vector3( 0, 0, 0 );
+                scene = new THREE.Scene();
 
-				var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
-				geometry.scale( - 1, 1, 1 );
+                var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
+                geometry.scale( - 1, 1, 1 );
 
-				/* //video
-				var video = document.createElement( 'video' );
-				video.width = 640;
-				video.height = 360;
-				video.loop = true;
-				video.muted = true;
-				video.src = " ********* ";
-				video.play();
-				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
+                /* //video
+                var video = document.createElement( 'video' );
+                video.width = 640;
+                video.height = 360;
+                video.loop = true;
+                video.muted = true;
+                video.src = " ********* ";
+                video.play();
+                video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
 
-				var texture = new THREE.VideoTexture( video );
-				texture.minFilter = THREE.LinearFilter;
-				texture.format = THREE.RGBFormat;
-				var material   = new THREE.MeshBasicMaterial( { map : texture } );*/
-				
-				//panorama
-				var texture = new THREE.TextureLoader();
-				texture.setCrossOrigin("");
+                var texture = new THREE.VideoTexture( video );
+                texture.minFilter = THREE.LinearFilter;
+                texture.format = THREE.RGBFormat;
+                var material   = new THREE.MeshBasicMaterial( { map : texture } );*/
+                
+                //panorama
+                var texture = new THREE.TextureLoader();
+                texture.setCrossOrigin("");
 
-				var material = new THREE.MeshBasicMaterial( {
-					map: texture.load( 'Image/snobal-shopping-pano.jpg' )
-				} );
-				
-				mesh = new THREE.Mesh( geometry, material );
+                var material = new THREE.MeshBasicMaterial( {
+                    map: texture.load( 'Image/snobal-shopping-pano.jpg' )
+                } );
+                
+                mesh = new THREE.Mesh( geometry, material );
 
-				scene.add( mesh );
+                scene.add( mesh );
 
-				renderer = new THREE.WebGLRenderer();
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				container.appendChild( renderer.domElement );
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                container.appendChild( renderer.domElement );
 
                 // controls, camera
                 controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -123,25 +154,30 @@
                 controls.enablePan = false;
 
                 window.addEventListener( 'resize', onWindowResize, false );
-			}
+            }
 
-			function onWindowResize() {
+            function hideIcon(){
+                //hide hand
+                document.getElementById("eq-icon").style.opacity = "0";
+            }
+
+            function onWindowResize() {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
 
                 renderer.setSize( window.innerWidth, window.innerHeight );
-			}
+            }
 
-			function animate() {
-				requestAnimationFrame( animate );
-				update();
+            function animate() {
+                requestAnimationFrame( animate );
+                update();
                 controls.update();
             }
 
 
-			function update() {
-				renderer.render( scene, camera );
-			}
-		</script>
-	</body>
+            function update() {
+                renderer.render( scene, camera );
+            }
+        </script>
+    </body>
 </html>
