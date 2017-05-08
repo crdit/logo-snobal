@@ -1,1 +1,1 @@
-# logo-snobal
+Temporary hosting of snobal assets.
